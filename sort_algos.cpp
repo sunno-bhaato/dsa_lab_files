@@ -94,6 +94,41 @@ void heapSort(std::vector<int>& arr) {
     }
 }
 
+// Partition function: Places pivot in correct position
+// Elements smaller than pivot go to left, larger go to right
+int partition(std::vector<int>& arr, int low, int high) {
+    // Choose last element as pivot
+    int pivot = arr[high];
+    
+    // Index of smaller element (indicates right position of pivot)
+    int i = low - 1;
+    
+    // Traverse array and move smaller elements to left
+    for (int j = low; j < high; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            std::swap(arr[i], arr[j]);
+        }
+    }
+    
+    // Place pivot in correct position
+    std::swap(arr[i + 1], arr[high]);
+    return (i + 1);
+}
+
+// Quick Sort: Main recursive function
+void quickSort(std::vector<int>& arr, int low, int high) {
+    if (low < high) {
+        // Partition the array and get pivot index
+        int pi = partition(arr, low, high);
+        
+        // Recursively sort elements before and after partition
+        quickSort(arr, low, pi - 1);    // Left subarray
+        quickSort(arr, pi + 1, high);   // Right subarray
+    }
+}
+
+
 // Utility function to print array
 void printArray(const std::vector<int>& arr) {
     for (int val : arr)
